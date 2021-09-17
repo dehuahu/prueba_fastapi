@@ -1,1 +1,4 @@
 /Lib
+_pychache_
+fastapi-env
+.DS_Store
