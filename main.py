@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from typing import Optional
-
+from pydantic import BaseModel
 app= FastAPI() #Instance app
 # GET/POST/DELETE/PUT métodos se les denomina la operación (operation) del path.
 # El endpoint o path es lo que va entre ()
@@ -69,7 +69,19 @@ def index(limit:int, published: bool, sort: Optional[str] =None):
 # REQUEST BODY
 
 # USAMOS EL MÉTODO GET PARA REALIZAR UNA CONSULTA Y EL MÉTODO POST PARA CREAR ALGO
+# Podemos crear un método POST para crear un nuevo blog
+
+class Blog(BaseModel): #Lo que hay dentro de la clase Blog es la información que se necesita para crear un nuevo blog.
+    title: str
+    body: str
+    published: Optional[bool] #este es el único parametro opcional
 
 @app.post("/blog")
-def create_blog():
-    return {"data": "Blog is created" }
+def create_blog(request: Blog):
+    return request
+    return {"data": f"Blog is created with as {title}" }
+#Cuando queremos crear un nuevo blog tenemos que mandar información
+# Cuando queremos que el cliente mande informacion a la API debe enviarse como request body. Para declarar
+# un request body hay que usar los modelos Pydantic. Por lo tanto from pydantic import BaseModel.
+# Si importamos BaseModel cuando creamos una clase y le incorporamos BaseModel estamos definiendo un modelo Pydantic.
+# Dentro de la clase definimos los parámetros que necesitemos.
