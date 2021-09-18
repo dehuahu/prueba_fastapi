@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-
+from typing import Optional
 
 app= FastAPI() #Instance app
 # GET/POST/DELETE/PUT métodos se les denomina la operación (operation) del path.
@@ -50,3 +50,26 @@ def comments(id):
 # @app.get("/blog/unpublished")
 # def unpublished():
 #     return {"data": "all unpublished blogs"}
+
+# QUERY PARAMETERS
+# Si quisieramos limitar los blogs no podemos realizarlo a partir de los parametros del path sino que hay que usar los parametros del query
+@app.get("/blog")
+def index(limit:int, published: bool, sort: Optional[str] =None):
+    # only get limit blogs
+    if published:
+        return {"data": f"{limit} published blogs from the db"}
+    # Los parametros del query aparecen en la ruta seguidos de un ?
+    else:
+        return {"data": f"{limit} blogs from the db"}
+
+# Si los parametros del query son obligatorios y le indicamos un valor por defecto, todos los parametros obligatorios
+# restantes tendrán que tener un valor por defecto  ejem: published: bool =True. Si no queremos que el parametro
+# sea obligatorio tendremos que indicar que es optional y que por defecto es None
+
+# REQUEST BODY
+
+# USAMOS EL MÉTODO GET PARA REALIZAR UNA CONSULTA Y EL MÉTODO POST PARA CREAR ALGO
+
+@app.post("/blog")
+def create_blog():
+    return {"data": "Blog is created" }
