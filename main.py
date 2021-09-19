@@ -78,10 +78,23 @@ class Blog(BaseModel): #Lo que hay dentro de la clase Blog es la información qu
 
 @app.post("/blog")
 def create_blog(request: Blog):
-    return request
-    return {"data": f"Blog is created with as {title}" }
+    #return request : El request nos devolvería la clase Blog
+    return {"data": f"Blog is created with title as {request.title}" } #Aqui hacemos referencia a uno de los parametros de la clase
 #Cuando queremos crear un nuevo blog tenemos que mandar información
 # Cuando queremos que el cliente mande informacion a la API debe enviarse como request body. Para declarar
 # un request body hay que usar los modelos Pydantic. Por lo tanto from pydantic import BaseModel.
 # Si importamos BaseModel cuando creamos una clase y le incorporamos BaseModel estamos definiendo un modelo Pydantic.
 # Dentro de la clase definimos los parámetros que necesitemos.
+
+# # Para cambiar el puerto del API y crear otro puerto con motivos de debugging, tenemos que escribir al final del archivo main:
+# import uvicorn
+# if __name__ == "__main__":
+#     uvicorn.run(app, host="127.0.0.1", port= 9000)
+#
+# #Para acceder al puerto tenemos que ir a la carpeta fastapi-env en el entorno virtual y escribir python main.py. Esto seria para activar
+# # el puerto 9000. Pero esto es solo con motivos de debugging
+
+
+# PYDANTIC SCHEMAS
+
+
